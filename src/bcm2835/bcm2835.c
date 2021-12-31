@@ -1861,11 +1861,11 @@ int bcm2835_init(void)
      */
     memfd = -1;
     ok = 0;
-    if (geteuid() == 0
+    if (getenv("NODE_BCM2835_FORCE_GPIOMEM") == NULL && (geteuid() == 0
 #ifdef BCM2835_HAVE_LIBCAP
 	|| bcm2835_has_capability(CAP_SYS_RAWIO)
 #endif
-	)
+	))
     {
       /* Open the master /dev/mem device */
       if ((memfd = open("/dev/mem", O_RDWR | O_SYNC) ) < 0) 
